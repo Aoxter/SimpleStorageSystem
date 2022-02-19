@@ -20,17 +20,17 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 public class ProductController {
     private final ProductRepository repository;
+    private final ProductModelAssembler assembler;
 
-    public ProductController(ProductRepository repository) {
+    public ProductController(ProductRepository repository, ProductModelAssembler assembler) {
         this.repository = repository;
+        this.assembler = assembler;
     }
+
 
     @GetMapping("/products")
     CollectionModel<EntityModel<Product>> all() {
-        List<EntityModel<Product>> products = repository.findAll().stream().map(product -> EntityModel.of(product,
-                linkTo(methodOn(ProductController.class).single(product.getId())).withSelfRel(),
-                linkTo(methodOn(ProductController.class).all()).withRel("products")))
-                .collect(Collectors.toList());
+        List<EntityModel<Product>> products = repository.findAll().stream().map(assembler::toModel).collect(Collectors.toList());
         return CollectionModel.of(products, linkTo(methodOn(ProductController.class).all()).withSelfRel());
     }
 
@@ -42,9 +42,7 @@ public class ProductController {
     @GetMapping("/products/{id}")
     EntityModel<Product> single(@PathVariable Long id) {
         Product product = repository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
-        return EntityModel.of(product,
-                linkTo(methodOn(ProductController.class).single(id)).withSelfRel(),
-                linkTo(methodOn(ProductController.class).all()).withRel("products"));
+        return assembler.toModel(product);
     }
 
     @PutMapping("/products/{id}")
