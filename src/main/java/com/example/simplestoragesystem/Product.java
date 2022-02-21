@@ -12,6 +12,9 @@ public class Product {
     private String name;
     private int amount;
     private float price;
+    //private Category category; many-to-one
+    //private Producer producer; many-to-one (different producer means different object with possible different prices and amounts
+    //private Storehouse storehouse; many-to-many? maybe as above?
 
     public Product() {
     }
