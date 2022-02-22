@@ -11,7 +11,7 @@ public class LoadDatbase {
     private static final Logger log = LoggerFactory.getLogger(LoadDatbase.class);
 
     @Bean
-    CommandLineRunner initDatabase(ProductRepository productRepository, OrderRepository orderRepository, ProducerRepository producerRepository, CategoryRepository categoryRepository){
+    CommandLineRunner initDatabase(ProductRepository productRepository, OrderRepository orderRepository, ProducerRepository producerRepository, CategoryRepository categoryRepository, StorehouseRepository storehouseRepository){
         return args -> {
             log.info("Preloading product " + productRepository.save(new Product("Keyboard", 12, 199.99f)));
             log.info("Preloading product " + productRepository.save(new Product("Mouse", 49, 59.99f)));
@@ -31,7 +31,12 @@ public class LoadDatbase {
             log.info("Preloading category " + categoryRepository.save(new Category("Computer devices")));
             log.info("Preloading category " + categoryRepository.save(new Category("Laptops")));
 
-            producerRepository.findAll().forEach(category -> log.info("Preloaded categories: " + category));
+            categoryRepository.findAll().forEach(category -> log.info("Preloaded categories: " + category));
+
+            log.info("Preloading storehous " + storehouseRepository.save(new Storehouse("Central Masuria Storehouse", "Olecko ul. Mickiewicza 33")));
+            log.info("Preloading storehous " + storehouseRepository.save(new Storehouse("Regional Suwalki Storehouse", "Suwalki ul. Konopnickiej 113")));
+
+            storehouseRepository.findAll().forEach(storehouse -> log.info("Preloaded storehouses: " + storehouse));
         };
     }
 }
