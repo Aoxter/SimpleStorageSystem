@@ -16,8 +16,7 @@ public class Storehouse {
     public Storehouse() {
     }
 
-    public Storehouse(Long id, String name, String address) {
-        this.id = id;
+    public Storehouse(String name, String address) {
         this.name = name;
         this.address = address;
     }

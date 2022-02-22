@@ -14,8 +14,7 @@ public class Producer {
     public Producer() {
     }
 
-    public Producer(Long id, String name) {
-        this.id = id;
+    public Producer(String name) {
         this.name = name;
     }
 

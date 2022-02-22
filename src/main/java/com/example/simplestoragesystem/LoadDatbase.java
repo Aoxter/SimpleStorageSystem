@@ -11,7 +11,7 @@ public class LoadDatbase {
     private static final Logger log = LoggerFactory.getLogger(LoadDatbase.class);
 
     @Bean
-    CommandLineRunner initDatabase(ProductRepository productRepository, OrderRepository orderRepository){
+    CommandLineRunner initDatabase(ProductRepository productRepository, OrderRepository orderRepository, ProducerRepository producerRepository){
         return args -> {
             log.info("Preloading " + productRepository.save(new Product("Keyboard", 12, 199.99f)));
             log.info("Preloading " + productRepository.save(new Product("Mouse", 49, 59.99f)));
@@ -24,6 +24,11 @@ public class LoadDatbase {
             orderRepository.findAll().forEach(order -> {
                 log.info("Preloaded " + order);
             });
+
+            log.info("Preloading " + producerRepository.save(new Producer("Asus")));
+            log.info("Preloading " + producerRepository.save(new Producer("Intel")));
+
+            producerRepository.findAll().forEach(producer -> log.info("Preloaded " + producer));
         };
     }
 }
