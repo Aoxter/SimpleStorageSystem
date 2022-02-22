@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class ProducerNotFoundAdvice {
+public class CategoryNotFoundAdvice{
     @ResponseBody
-    @ExceptionHandler(ProducerNotFoundException.class)
+    @ExceptionHandler(CategoryNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String producerNotFoundHandler(ProducerNotFoundException ex) {
-        return ex.getMessage();
-    }
+    String categoryNotFoundHandler(CategoryNotFoundException ex) {return ex.getMessage();}
 }

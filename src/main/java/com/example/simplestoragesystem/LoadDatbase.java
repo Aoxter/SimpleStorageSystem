@@ -11,24 +11,27 @@ public class LoadDatbase {
     private static final Logger log = LoggerFactory.getLogger(LoadDatbase.class);
 
     @Bean
-    CommandLineRunner initDatabase(ProductRepository productRepository, OrderRepository orderRepository, ProducerRepository producerRepository){
+    CommandLineRunner initDatabase(ProductRepository productRepository, OrderRepository orderRepository, ProducerRepository producerRepository, CategoryRepository categoryRepository){
         return args -> {
-            log.info("Preloading " + productRepository.save(new Product("Keyboard", 12, 199.99f)));
-            log.info("Preloading " + productRepository.save(new Product("Mouse", 49, 59.99f)));
+            log.info("Preloading product " + productRepository.save(new Product("Keyboard", 12, 199.99f)));
+            log.info("Preloading product " + productRepository.save(new Product("Mouse", 49, 59.99f)));
 
-            productRepository.findAll().forEach(product -> log.info("Preloaded " + product));
+            productRepository.findAll().forEach(product -> log.info("Preloaded products: " + product));
 
-            log.info("Preloading " + orderRepository.save(new Order("Keyboard", Status.COMPLETED)));
-            log.info("Preloading " + orderRepository.save(new Order("Mouse", Status.IN_PROGRESS)));
+            log.info("Preloading order " + orderRepository.save(new Order("Keyboard", Status.COMPLETED)));
+            log.info("Preloading order " + orderRepository.save(new Order("Mouse", Status.IN_PROGRESS)));
 
-            orderRepository.findAll().forEach(order -> {
-                log.info("Preloaded " + order);
-            });
+            orderRepository.findAll().forEach(order -> log.info("Preloaded orders: " + order));
 
-            log.info("Preloading " + producerRepository.save(new Producer("Asus")));
-            log.info("Preloading " + producerRepository.save(new Producer("Intel")));
+            log.info("Preloading producer " + producerRepository.save(new Producer("Asus")));
+            log.info("Preloading producer " + producerRepository.save(new Producer("Intel")));
 
-            producerRepository.findAll().forEach(producer -> log.info("Preloaded " + producer));
+            producerRepository.findAll().forEach(producer -> log.info("Preloaded producers: " + producer));
+
+            log.info("Preloading category " + categoryRepository.save(new Category("Computer devices")));
+            log.info("Preloading category " + categoryRepository.save(new Category("Laptops")));
+
+            producerRepository.findAll().forEach(category -> log.info("Preloaded categories: " + category));
         };
     }
 }
