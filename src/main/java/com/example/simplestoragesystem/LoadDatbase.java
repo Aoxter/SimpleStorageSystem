@@ -1,5 +1,7 @@
 package com.example.simplestoragesystem;
 
+import com.example.simplestoragesystem.repository.*;
+import com.example.simplestoragesystem.service.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -13,11 +15,6 @@ public class LoadDatbase {
     @Bean
     CommandLineRunner initDatabase(ProductRepository productRepository, OrderRepository orderRepository, ProducerRepository producerRepository, CategoryRepository categoryRepository, StorehouseRepository storehouseRepository){
         return args -> {
-            log.info("Preloading product " + productRepository.save(new Product("Keyboard", 12, 199.99f)));
-            log.info("Preloading product " + productRepository.save(new Product("Mouse", 49, 59.99f)));
-
-            productRepository.findAll().forEach(product -> log.info("Preloaded products: " + product));
-
             log.info("Preloading order " + orderRepository.save(new Order("Keyboard", Status.COMPLETED)));
             log.info("Preloading order " + orderRepository.save(new Order("Mouse", Status.IN_PROGRESS)));
 
@@ -28,6 +25,11 @@ public class LoadDatbase {
 
             producerRepository.findAll().forEach(producer -> log.info("Preloaded producers: " + producer));
 
+            //log.info("Preloading category " + categoryRepository.save(category_1));
+            //log.info("Preloading category " + categoryRepository.save(category_2));
+
+            //Default category!
+            log.info("Preloading category " + categoryRepository.save(new Category("Other")));
             log.info("Preloading category " + categoryRepository.save(new Category("Computer devices")));
             log.info("Preloading category " + categoryRepository.save(new Category("Laptops")));
 
@@ -37,6 +39,11 @@ public class LoadDatbase {
             log.info("Preloading storehous " + storehouseRepository.save(new Storehouse("Regional Suwalki Storehouse", "Suwalki ul. Konopnickiej 113")));
 
             storehouseRepository.findAll().forEach(storehouse -> log.info("Preloaded storehouses: " + storehouse));
+
+            log.info("Preloading product " + productRepository.save(new Product("Keyboard", 12, 199.99f)));
+            log.info("Preloading product " + productRepository.save(new Product("Mouse", 49, 59.99f)));
+
+            productRepository.findAll().forEach(product -> log.info("Preloaded products: " + product));
         };
     }
 }
