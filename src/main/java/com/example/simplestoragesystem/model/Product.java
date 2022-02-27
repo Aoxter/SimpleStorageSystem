@@ -1,6 +1,5 @@
-package com.example.simplestoragesystem.service.model;
+package com.example.simplestoragesystem.model;
 
-import com.example.simplestoragesystem.repository.CategoryRepository;
 import lombok.Data;
 
 import java.util.Objects;
@@ -19,17 +18,20 @@ public class Product {
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
-    //private Producer producer; many-to-one (different producer means different object with possible different prices and amounts
+    @ManyToOne
+    @JoinColumn(name="producer_id")
+    private Producer producer;
     //private Storehouse storehouse; many-to-many? maybe as above?
 
     public Product() {
     }
 
-    public Product(String name, int amount, float price, Category category) {
+    public Product(String name, int amount, float price, Category category, Producer producer) {
         this.name = name;
         this.amount = amount;
         this.price = price;
         this.category = category;
+        this.producer = producer;
     }
 
     public Product(String name, int amount, float price) {
@@ -87,11 +89,15 @@ public class Product {
 
     @Override
     public String toString() {
-        return String.format("Product: id=%s, name=%s, amount=%s, price=%s", this.id, this.name, this.amount, this.price);
+        return String.format("Product: id=%s, name=%s, amount=%s, price=%s, category=%s, producer=%s", this.id, this.name, this.amount, this.price, this.category, this.producer);
     }
 
     public void changeCategory (Category category) {
         this.category = category;
+    }
+
+    public void changeProducer (Producer producer) {
+        this.producer = producer;
     }
 
 }

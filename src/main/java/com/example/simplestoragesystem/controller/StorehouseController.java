@@ -2,7 +2,7 @@ package com.example.simplestoragesystem.controller;
 
 import com.example.simplestoragesystem.assembler.StorehouseModelAssembler;
 import com.example.simplestoragesystem.exception.StorehouseNotFoundException;
-import com.example.simplestoragesystem.service.model.Storehouse;
+import com.example.simplestoragesystem.model.Storehouse;
 import com.example.simplestoragesystem.repository.StorehouseRepository;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;

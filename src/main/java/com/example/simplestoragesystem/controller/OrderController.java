@@ -2,8 +2,8 @@ package com.example.simplestoragesystem.controller;
 
 import com.example.simplestoragesystem.assembler.OrderModelAssembler;
 import com.example.simplestoragesystem.exception.OrderNotFoundException;
-import com.example.simplestoragesystem.service.model.Order;
-import com.example.simplestoragesystem.service.model.Status;
+import com.example.simplestoragesystem.model.Order;
+import com.example.simplestoragesystem.model.Status;
 import com.example.simplestoragesystem.repository.OrderRepository;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;

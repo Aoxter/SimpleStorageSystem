@@ -2,8 +2,10 @@ package com.example.simplestoragesystem.controller;
 
 import com.example.simplestoragesystem.assembler.ProducerModelAssembler;
 import com.example.simplestoragesystem.exception.ProducerNotFoundException;
-import com.example.simplestoragesystem.service.model.Producer;
+import com.example.simplestoragesystem.model.Category;
+import com.example.simplestoragesystem.model.Producer;
 import com.example.simplestoragesystem.repository.ProducerRepository;
+import com.example.simplestoragesystem.service.ProducerService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
@@ -16,44 +18,50 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class ProducerController {
-    private final ProducerRepository repository;
+    private final ProducerService service;
     private final ProducerModelAssembler assembler;
 
-    public ProducerController(ProducerRepository repository, ProducerModelAssembler assembler) {
-        this.repository = repository;
+    public ProducerController(ProducerService service, ProducerModelAssembler assembler) {
+        this.service = service;
         this.assembler = assembler;
     }
 
     @GetMapping("/producers")
     public CollectionModel<EntityModel<Producer>> all() {
-        List<EntityModel<Producer>> producers = repository.findAll().stream().map(assembler::toModel).collect(Collectors.toList());
+        List<EntityModel<Producer>> producers = service.readProducers().stream().map(assembler::toModel).collect(Collectors.toList());
         return CollectionModel.of(producers, linkTo(methodOn(ProducerController.class).all()).withSelfRel());
     }
 
     @PostMapping("/producers")
-    public Producer createProducer(@RequestBody Producer newProducer){
-        return repository.save(newProducer);
+    public Producer createProducer(@RequestBody final Producer newProducer){
+        return service.createProducer(newProducer);
     }
 
     @GetMapping("/producers/{id}")
-    public EntityModel<Producer> single(@PathVariable Long id) {
-        Producer producer = repository.findById(id).orElseThrow(() -> new ProducerNotFoundException(id));
+    public EntityModel<Producer> single(@PathVariable final Long id) {
+        Producer producer = service.readProducer(id);
         return assembler.toModel(producer);
     }
 
     @PutMapping("/producers/{id}")
-    public Producer updateProducer(@RequestBody Producer newProducer, @PathVariable Long id){
-        return repository.findById(id).map(producer -> {
-            producer.setName(newProducer.getName());
-            return repository.save(producer);
-        }).orElseGet(() -> {
-            newProducer.setId(id);
-            return repository.save(newProducer);
-        });
+    public Producer updateProducer(@RequestBody final Producer newProducer, @PathVariable final Long id){
+        return service.updateProducer(id, newProducer);
     }
 
     @DeleteMapping("/producers/{id}")
-    public void deleteProducer(@PathVariable Long id){
-        repository.deleteById(id);
+    public void deleteProducer(@PathVariable final Long id){
+        service.deleteProducer(id);
+    }
+
+    @PostMapping("/producers/{producerId}/products/{productId}/add")
+    public Producer addProductToProducer(@PathVariable final Long producerId, @PathVariable final Long productId) {
+        Producer producer = service.addProductToProducer(productId, producerId);
+        return producer;
+    }
+
+    @DeleteMapping("/producers/{producerId}/products/{productId}/remove")
+    public Producer removeProductFromProducer(@PathVariable final Long producerId, @PathVariable final Long productId) {
+        Producer producer = service.removeProductFromProducer(productId, producerId);
+        return producer;
     }
 }

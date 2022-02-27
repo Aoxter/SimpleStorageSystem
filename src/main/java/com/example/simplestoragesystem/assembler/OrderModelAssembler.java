@@ -3,8 +3,8 @@ package com.example.simplestoragesystem.assembler;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import com.example.simplestoragesystem.controller.OrderController;
-import com.example.simplestoragesystem.service.model.Order;
-import com.example.simplestoragesystem.service.model.Status;
+import com.example.simplestoragesystem.model.Order;
+import com.example.simplestoragesystem.model.Status;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;

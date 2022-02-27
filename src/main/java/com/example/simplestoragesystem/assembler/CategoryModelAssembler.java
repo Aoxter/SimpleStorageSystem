@@ -1,7 +1,7 @@
 package com.example.simplestoragesystem.assembler;
 
 import com.example.simplestoragesystem.controller.CategoryController;
-import com.example.simplestoragesystem.service.model.Category;
+import com.example.simplestoragesystem.model.Category;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,7 @@
 package com.example.simplestoragesystem.controller;
 
 import com.example.simplestoragesystem.assembler.CategoryModelAssembler;
-import com.example.simplestoragesystem.service.model.Category;
+import com.example.simplestoragesystem.model.Category;
 import com.example.simplestoragesystem.service.CategoryService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -44,7 +44,7 @@ public class CategoryController {
         return assembler.toModel(category);
     }
 
-    @PutMapping("/category/{id}")
+    @PutMapping("/categories/{id}")
     public Category updateCategory(@RequestBody final Category newCategory, @PathVariable final Long id) {
 //        return repository.findById(id).map(category -> {
 //            category.setName(newCategory.getName());
@@ -56,19 +56,19 @@ public class CategoryController {
         return service.updateCategory(id, newCategory);
     }
 
-    @DeleteMapping("/category/{id}")
+    @DeleteMapping("/categories/{id}")
     public Category deleteCategory(@PathVariable final Long id) {
         //repository.deleteById(id);
         return service.deleteCategory(id);
     }
 
-    @PostMapping("/category/{categoryId}/products/{productId}/add")
+    @PostMapping("/categories/{categoryId}/products/{productId}/add")
     public Category addProductToCategory(@PathVariable final Long categoryId, @PathVariable final Long productId) {
         Category category = service.addProductToCategory(productId, categoryId);
         return category;
     }
 
-    @DeleteMapping("/category/{categoryId}/products/{productId}/remove")
+    @DeleteMapping("/categories/{categoryId}/products/{productId}/remove")
     public Category removeProductFromCategory(@PathVariable final Long categoryId, @PathVariable final Long productId) {
         Category category = service.removeProductFromCategory(productId, categoryId);
         return category;

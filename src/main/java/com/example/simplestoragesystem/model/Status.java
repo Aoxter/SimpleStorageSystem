@@ -1,4 +1,4 @@
-package com.example.simplestoragesystem.service.model;
+package com.example.simplestoragesystem.model;
 
 public enum Status {
     IN_PROGRESS,

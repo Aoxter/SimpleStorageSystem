@@ -1,7 +1,7 @@
 package com.example.simplestoragesystem;
 
+import com.example.simplestoragesystem.model.*;
 import com.example.simplestoragesystem.repository.*;
-import com.example.simplestoragesystem.service.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -20,8 +20,8 @@ public class LoadDatbase {
 
             orderRepository.findAll().forEach(order -> log.info("Preloaded orders: " + order));
 
-            log.info("Preloading producer " + producerRepository.save(new Producer("Asus")));
-            log.info("Preloading producer " + producerRepository.save(new Producer("Intel")));
+            log.info("Preloading producer " + producerRepository.save(new Producer("Asus", true)));
+            log.info("Preloading producer " + producerRepository.save(new Producer("Intel", false)));
 
             producerRepository.findAll().forEach(producer -> log.info("Preloaded producers: " + producer));
 

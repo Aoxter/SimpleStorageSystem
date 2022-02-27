@@ -1,6 +1,6 @@
 package com.example.simplestoragesystem.repository;
 
-import com.example.simplestoragesystem.service.model.Order;
+import com.example.simplestoragesystem.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
