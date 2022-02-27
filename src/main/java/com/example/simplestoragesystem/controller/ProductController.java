@@ -44,6 +44,11 @@ public class ProductController {
         return service.createProduct(newProduct);
     }
 
+    @PostMapping("/products/bulk")
+    public List<Product> createProductsBulk(@RequestBody final List<Product> newProducts){
+        return service.createProductsBulk(newProducts);
+    }
+
     @GetMapping("/products/{id}")
     public EntityModel<Product> single(@PathVariable final Long id) {
         //Product product = repository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
@@ -74,6 +79,12 @@ public class ProductController {
     @PutMapping("/product/{productId}/category/{categoryId}/change")
     public Product updateProductCategory(@PathVariable final Long productId, @PathVariable final Long categoryId) {
         Product product = service.updateCategory(productId, categoryId);
+        return product;
+    }
+
+    @PutMapping("/product/{productId}/producer/{producerId}/change")
+    public Product updateProductProducer(@PathVariable final Long productId, @PathVariable final Long producerId) {
+        Product product = service.updateProducer(productId, producerId);
         return product;
     }
 }

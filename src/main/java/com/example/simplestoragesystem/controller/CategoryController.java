@@ -2,6 +2,7 @@ package com.example.simplestoragesystem.controller;
 
 import com.example.simplestoragesystem.assembler.CategoryModelAssembler;
 import com.example.simplestoragesystem.model.Category;
+import com.example.simplestoragesystem.model.Product;
 import com.example.simplestoragesystem.service.CategoryService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -35,6 +36,11 @@ public class CategoryController {
     public Category createCategory(@RequestBody final Category newCategory) {
         //return repository.save(newCategory);
         return service.createCategory(newCategory);
+    }
+
+    @PostMapping("/categories/bulk")
+    public List<Category> createCategoriesBulk(@RequestBody final List<Category> newCategories){
+        return service.createCategoriesBulk(newCategories);
     }
 
     @GetMapping("/categories/{id}")
@@ -71,6 +77,12 @@ public class CategoryController {
     @DeleteMapping("/categories/{categoryId}/products/{productId}/remove")
     public Category removeProductFromCategory(@PathVariable final Long categoryId, @PathVariable final Long productId) {
         Category category = service.removeProductFromCategory(productId, categoryId);
+        return category;
+    }
+
+    @PutMapping("/categories/{oldCategoryId}/moveTo/{newCategoryId}")
+    public Category moveProductsBetweenCategories(@PathVariable final Long oldCategoryId, @PathVariable final Long newCategoryId) {
+        Category category = service.moveProductsBetweenCategories(oldCategoryId, newCategoryId);
         return category;
     }
 }

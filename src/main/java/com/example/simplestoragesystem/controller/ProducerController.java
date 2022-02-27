@@ -37,6 +37,11 @@ public class ProducerController {
         return service.createProducer(newProducer);
     }
 
+    @PostMapping("/producers/bulk")
+    public List<Producer> createProducersBulk(@RequestBody final List<Producer> newProducers){
+        return service.createProducersBulk(newProducers);
+    }
+
     @GetMapping("/producers/{id}")
     public EntityModel<Producer> single(@PathVariable final Long id) {
         Producer producer = service.readProducer(id);
@@ -62,6 +67,12 @@ public class ProducerController {
     @DeleteMapping("/producers/{producerId}/products/{productId}/remove")
     public Producer removeProductFromProducer(@PathVariable final Long producerId, @PathVariable final Long productId) {
         Producer producer = service.removeProductFromProducer(productId, producerId);
+        return producer;
+    }
+
+    @PutMapping("/producers/{oldProducerId}/moveTo/{newProducerId}")
+    public Producer moveProductsBetweenProducers(@PathVariable final Long oldProducerId, @PathVariable final Long newProducerId) {
+        Producer producer = service.moveProductsBetweenProducers(oldProducerId, newProducerId);
         return producer;
     }
 }

@@ -31,6 +31,10 @@ public class ProductService {
         return repository.save(product);
     }
 
+    public List<Product> createProductsBulk(List<Product> products) {
+        return StreamSupport.stream(repository.saveAll(products).spliterator(), false).collect((Collectors.toList()));
+    }
+
     public List<Product> readProducts() {
         return StreamSupport.stream(repository.findAll().spliterator(), false).collect(Collectors.toList());
     }

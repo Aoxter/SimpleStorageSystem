@@ -47,6 +47,10 @@ public class Producer {
         products.add(product);
     }
 
+    public void addProductsBulk(List<Product> products) {
+        products.addAll(products);
+    }
+
     public void removeProduct(Product product) {
         products.remove(product);
     }

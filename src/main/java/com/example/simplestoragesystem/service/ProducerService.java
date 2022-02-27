@@ -32,6 +32,10 @@ public class ProducerService {
         return repository.save(producer);
     }
 
+    public List<Producer> createProducersBulk(List<Producer> producers) {
+        return StreamSupport.stream(repository.saveAll(producers).spliterator(), false).collect((Collectors.toList()));
+    }
+
     public List<Producer> readProducers() {
         return StreamSupport.stream(repository.findAll().spliterator(), false).collect(Collectors.toList());
     }
@@ -75,5 +79,13 @@ public class ProducerService {
         Product product = productService.readProduct(productId);
         producer.removeProduct(product);
         return producer;
+    }
+
+    public Producer moveProductsBetweenProducers(Long oldProducerId, Long newProducerId) {
+        Producer oldProducer = readProducer(oldProducerId);
+        Producer newProducer = readProducer(newProducerId);
+        List<Product> productsToMove = oldProducer.getProducts();
+        newProducer.addProductsBulk(productsToMove);
+        return newProducer;
     }
 }

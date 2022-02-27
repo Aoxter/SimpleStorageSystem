@@ -3,6 +3,7 @@ package com.example.simplestoragesystem.service;
 import com.example.simplestoragesystem.exception.CategoryNotFoundException;
 import com.example.simplestoragesystem.exception.ProductHasAlreadyCategoryException;
 import com.example.simplestoragesystem.model.Category;
+import com.example.simplestoragesystem.model.Producer;
 import com.example.simplestoragesystem.model.Product;
 import com.example.simplestoragesystem.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,10 @@ public class CategoryService {
 
     public Category createCategory(Category category) {
         return repository.save(category);
+    }
+
+    public List<Category> createCategoriesBulk(List<Category> categories) {
+        return StreamSupport.stream(repository.saveAll(categories).spliterator(), false).collect((Collectors.toList()));
     }
 
     public List<Category> readCategories() {
@@ -72,5 +77,13 @@ public class CategoryService {
         Product product = productService.readProduct(productId);
         category.removeProduct(product);
         return category;
+    }
+
+    public Category moveProductsBetweenCategories(Long oldCategoryId, Long newCategoryId) {
+        Category oldCategory = readCategory(oldCategoryId);
+        Category newCategory = readCategory(newCategoryId);
+        List<Product> productsToMove = oldCategory.getProducts();
+        newCategory.addProductsBulk(productsToMove);
+        return newCategory;
     }
 }
