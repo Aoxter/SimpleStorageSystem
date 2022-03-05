@@ -1,10 +1,8 @@
 package com.example.simplestoragesystem.controller;
 
 import com.example.simplestoragesystem.assembler.CategoryModelAssembler;
-import com.example.simplestoragesystem.exception.CategoryIsConnnectedWithProductsException;
-import com.example.simplestoragesystem.exception.ProducerIsConnnectedWithProductsException;
+import com.example.simplestoragesystem.exception.CategoryIsConnectedWithProductsException;
 import com.example.simplestoragesystem.model.Category;
-import com.example.simplestoragesystem.model.Product;
 import com.example.simplestoragesystem.service.CategoryService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -18,7 +16,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class CategoryController {
-    //private final CategoryRepository repository;
     private final CategoryModelAssembler assembler;
     private final CategoryService service;
 
@@ -29,14 +26,12 @@ public class CategoryController {
 
     @GetMapping("/categories")
     public CollectionModel<EntityModel<Category>> all() {
-        //List<EntityModel<Category>> categories = repository.findAll().stream().map(assembler::toModel).collect(Collectors.toList());
         List<EntityModel<Category>> categories = service.readCategories().stream().map(assembler::toModel).collect(Collectors.toList());
         return CollectionModel.of(categories, linkTo(methodOn(CategoryController.class).all()).withSelfRel());
     }
 
     @PostMapping("/categories")
     public Category createCategory(@RequestBody final Category newCategory) {
-        //return repository.save(newCategory);
         return service.createCategory(newCategory);
     }
 
@@ -47,7 +42,6 @@ public class CategoryController {
 
     @GetMapping("/categories/{id}")
     public EntityModel<Category> single(@PathVariable final Long id) {
-        //Category category = repository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
         Category category = service.readCategory(id);
         return assembler.toModel(category);
     }
@@ -66,7 +60,7 @@ public class CategoryController {
 
     @DeleteMapping("/categories/{id}")
     public Category deleteCategory(@PathVariable final Long id) {
-        if(service.checkProductsList(id)) throw new CategoryIsConnnectedWithProductsException(id);
+        if(service.checkProductsList(id)) throw new CategoryIsConnectedWithProductsException(id);
         return service.deleteCategory(id);
     }
 

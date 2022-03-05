@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ProductHasAlreadyProducerAdvice {
     @ResponseBody
     @ExceptionHandler(ProductHasAlreadyProducerException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     String productHasAlreadyProducerHandler(ProductHasAlreadyProducerException ex) {
         return ex.getMessage();
     }

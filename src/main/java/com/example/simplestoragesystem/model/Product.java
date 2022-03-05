@@ -21,17 +21,20 @@ public class Product {
     @ManyToOne
     @JoinColumn(name="producer_id")
     private Producer producer;
-    //private Storehouse storehouse; many-to-many? maybe as above?
+    @ManyToOne
+    @JoinColumn(name="storehouse_id")
+    private Storehouse storehouse;
 
     public Product() {
     }
 
-    public Product(String name, int amount, float price, Category category, Producer producer) {
+    public Product(String name, int amount, float price, Category category, Producer producer, Storehouse storehouse) {
         this.name = name;
         this.amount = amount;
         this.price = price;
         this.category = category;
         this.producer = producer;
+        this.storehouse = storehouse;
     }
 
     public Product(String name, int amount, float price) {
@@ -41,37 +44,6 @@ public class Product {
         //this.category =
     }
 
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public int getAmount() {
-//        return amount;
-//    }
-//
-//    public void setAmount(int amount) {
-//        this.amount = amount;
-//    }
-//
-//    public float getPrice() {
-//        return price;
-//    }
-//
-//    public void setPrice(float price) {
-//        this.price = price;
-//    }
 
     @Override
     public boolean equals(Object obj) {
@@ -79,17 +51,19 @@ public class Product {
         if (!(obj instanceof Product)) return false;
         Product product = (Product) obj;
         return Objects.equals(this.id, product.id) && Objects.equals(this.name, product.name) &&
-                Objects.equals(this.amount, product.amount) && Objects.equals(this.price, product.price);
+                Objects.equals(this.amount, product.amount) && Objects.equals(this.price, product.price) &&
+                Objects.equals(this.category, product.category) && Objects.equals(this.producer, product.producer) &&
+                Objects.equals(this.storehouse, product.storehouse);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.name, this.amount, this.price);
+        return Objects.hash(this.id, this.name, this.amount, this.price, this.category, this.producer, this.storehouse);
     }
 
     @Override
     public String toString() {
-        return String.format("Product: id=%s, name=%s, amount=%s, price=%s, category=%s, producer=%s", this.id, this.name, this.amount, this.price, this.category, this.producer);
+        return String.format("Product: id=%s, name=%s, amount=%s, price=%s, category=%s, producer=%s, storehouse=%s", this.id, this.name, this.amount, this.price, this.category, this.producer, this.storehouse);
     }
 
     public void changeCategory (Category category) {
@@ -98,6 +72,10 @@ public class Product {
 
     public void changeProducer (Producer producer) {
         this.producer = producer;
+    }
+
+    public void changeStorehouse (Storehouse storehouse) {
+        this.storehouse = storehouse;
     }
 
 }

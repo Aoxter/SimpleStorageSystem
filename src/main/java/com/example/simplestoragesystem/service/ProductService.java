@@ -4,6 +4,7 @@ import com.example.simplestoragesystem.exception.ProductNotFoundException;
 import com.example.simplestoragesystem.model.Category;
 import com.example.simplestoragesystem.model.Producer;
 import com.example.simplestoragesystem.model.Product;
+import com.example.simplestoragesystem.model.Storehouse;
 import com.example.simplestoragesystem.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -19,12 +20,14 @@ public class ProductService {
     private final ProductRepository repository;
     private final CategoryService categoryService;
     private final ProducerService producerService;
+    private final StorehouseService storehouseService;
 
     @Autowired
-    public ProductService(ProductRepository repository, @Lazy CategoryService categoryService, @Lazy ProducerService producerService) {
+    public ProductService(ProductRepository repository, @Lazy CategoryService categoryService, @Lazy ProducerService producerService, @Lazy StorehouseService storehouseService) {
         this.repository = repository;
         this.categoryService = categoryService;
         this.producerService = producerService;
+        this.storehouseService = storehouseService;
     }
 
     public Product createProduct(Product product) {
@@ -72,6 +75,14 @@ public class ProductService {
         Product product = readProduct(productId);
         Producer producer = producerService.readProducer(producerId);
         product.changeProducer(producer);
+        return product;
+    }
+
+    @Transactional
+    public Product updateStorehouse(Long productId, Long storehouseId) {
+        Product product = readProduct(productId);
+        Storehouse storehouse = storehouseService.readStorehouse(storehouseId);
+        product.changeStorehouse(storehouse);
         return product;
     }
 }

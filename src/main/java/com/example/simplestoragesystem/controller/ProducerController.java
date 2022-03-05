@@ -1,11 +1,8 @@
 package com.example.simplestoragesystem.controller;
 
 import com.example.simplestoragesystem.assembler.ProducerModelAssembler;
-import com.example.simplestoragesystem.exception.ProducerIsConnnectedWithProductsException;
-import com.example.simplestoragesystem.exception.ProducerNotFoundException;
-import com.example.simplestoragesystem.model.Category;
+import com.example.simplestoragesystem.exception.ProducerIsConnectedWithProductsException;
 import com.example.simplestoragesystem.model.Producer;
-import com.example.simplestoragesystem.repository.ProducerRepository;
 import com.example.simplestoragesystem.service.ProducerService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -56,7 +53,7 @@ public class ProducerController {
 
     @DeleteMapping("/producers/{id}")
     public void deleteProducer(@PathVariable final Long id){
-        if(service.checkProductsList(id)) throw new ProducerIsConnnectedWithProductsException(id);
+        if(service.checkProductsList(id)) throw new ProducerIsConnectedWithProductsException(id);
         service.deleteProducer(id);
     }
 

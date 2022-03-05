@@ -1,47 +1,27 @@
 package com.example.simplestoragesystem.model;
 
+import lombok.Data;
+
+import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Data
 @Entity
 public class Storehouse {
     private @Id @GeneratedValue Long id;
-    private String name;
+    private @Column(name="STOREHOUSE_NAME", length=250, nullable=false, unique=true) String name;
     //TODO: split on Town,Street, Post Code etc?
     private String address;
+    @OneToMany
+    private List<Product> products;
 
     public Storehouse() {
     }
 
     public Storehouse(String name, String address) {
         this.name = name;
-        this.address = address;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
         this.address = address;
     }
 
@@ -62,4 +42,18 @@ public class Storehouse {
     public String toString() {
         return String.format("Storehouse: id=%s, name=%s, address=%s", this.id, this.name, this.address);
     }
+
+    public void addProduct(Product product) {
+        products.add(product);
+    }
+
+    public void addProductsBulk(List<Product> products) {
+        products.addAll(products);
+    }
+
+    public void removeProduct(Product product) {
+        products.remove(product);
+    }
+
+    public boolean checkProductsListEmpty() {return products.isEmpty();}
 }

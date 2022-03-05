@@ -1,10 +1,7 @@
 package com.example.simplestoragesystem.service;
 
-import com.example.simplestoragesystem.exception.CategoryNotFoundException;
 import com.example.simplestoragesystem.exception.ProducerNotFoundException;
-import com.example.simplestoragesystem.exception.ProductHasAlreadyCategoryException;
 import com.example.simplestoragesystem.exception.ProductHasAlreadyProducerException;
-import com.example.simplestoragesystem.model.Category;
 import com.example.simplestoragesystem.model.Producer;
 import com.example.simplestoragesystem.model.Product;
 import com.example.simplestoragesystem.repository.ProducerRepository;

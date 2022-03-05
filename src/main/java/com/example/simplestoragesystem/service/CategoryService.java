@@ -3,7 +3,6 @@ package com.example.simplestoragesystem.service;
 import com.example.simplestoragesystem.exception.CategoryNotFoundException;
 import com.example.simplestoragesystem.exception.ProductHasAlreadyCategoryException;
 import com.example.simplestoragesystem.model.Category;
-import com.example.simplestoragesystem.model.Producer;
 import com.example.simplestoragesystem.model.Product;
 import com.example.simplestoragesystem.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;

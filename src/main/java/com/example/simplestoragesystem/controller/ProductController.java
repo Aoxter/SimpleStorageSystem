@@ -22,7 +22,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class ProductController {
-    //private final ProductRepository repository;
     private final ProductModelAssembler assembler;
     private final ProductService service;
 
@@ -34,7 +33,6 @@ public class ProductController {
 
     @GetMapping("/products")
     public CollectionModel<EntityModel<Product>> all() {
-        //List<EntityModel<Product>> products = repository.findAll().stream().map(assembler::toModel).collect(Collectors.toList());
         List<EntityModel<Product>> products = service.readProducts().stream().map(assembler::toModel).collect(Collectors.toList());
         return CollectionModel.of(products, linkTo(methodOn(ProductController.class).all()).withSelfRel());
     }
@@ -51,28 +49,17 @@ public class ProductController {
 
     @GetMapping("/products/{id}")
     public EntityModel<Product> single(@PathVariable final Long id) {
-        //Product product = repository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
         Product product = service.readProduct(id);
         return assembler.toModel(product);
     }
 
     @PutMapping("/products/{id}")
     public Product updateProduct(@RequestBody final Product newProduct, @PathVariable final Long id){
-//        return repository.findById(id).map(product -> {
-//            product.setName(newProduct.getName());
-//            product.setAmount(newProduct.getAmount());
-//            product.setPrice(newProduct.getPrice());
-//            return repository.save(product);
-//        }).orElseGet(() -> {
-//            newProduct.setId(id);
-//            return repository.save(newProduct);
-//        });
         return service.updateProduct(id, newProduct);
     }
 
     @DeleteMapping("/products/{id}")
     public Product deleteProduct(@PathVariable final Long id){
-        //repository.deleteById(id);
         return service.deleteProduct(id);
     }
 
@@ -85,6 +72,12 @@ public class ProductController {
     @PutMapping("/product/{productId}/producer/{producerId}/change")
     public Product updateProductProducer(@PathVariable final Long productId, @PathVariable final Long producerId) {
         Product product = service.updateProducer(productId, producerId);
+        return product;
+    }
+
+    @PutMapping("/product/{productId}/storehouse/{storehouseId}/change")
+    public Product updateProductStorehouse(@PathVariable final Long productId, @PathVariable final Long storehouseId) {
+        Product product = service.updateStorehouse(productId, storehouseId);
         return product;
     }
 }
