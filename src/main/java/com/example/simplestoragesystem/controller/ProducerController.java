@@ -1,6 +1,7 @@
 package com.example.simplestoragesystem.controller;
 
 import com.example.simplestoragesystem.assembler.ProducerModelAssembler;
+import com.example.simplestoragesystem.exception.ProducerIsConnnectedWithProductsException;
 import com.example.simplestoragesystem.exception.ProducerNotFoundException;
 import com.example.simplestoragesystem.model.Category;
 import com.example.simplestoragesystem.model.Producer;
@@ -55,6 +56,7 @@ public class ProducerController {
 
     @DeleteMapping("/producers/{id}")
     public void deleteProducer(@PathVariable final Long id){
+        if(service.checkProductsList(id)) throw new ProducerIsConnnectedWithProductsException(id);
         service.deleteProducer(id);
     }
 

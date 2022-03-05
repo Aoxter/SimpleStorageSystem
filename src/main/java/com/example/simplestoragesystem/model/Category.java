@@ -70,4 +70,6 @@ public class Category {
     public void removeProduct(Product product) {
         products.remove(product);
     }
+
+    public boolean checkProductsListEmpty() {return products.isEmpty();}
 }

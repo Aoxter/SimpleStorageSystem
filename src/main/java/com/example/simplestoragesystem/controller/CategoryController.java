@@ -1,6 +1,8 @@
 package com.example.simplestoragesystem.controller;
 
 import com.example.simplestoragesystem.assembler.CategoryModelAssembler;
+import com.example.simplestoragesystem.exception.CategoryIsConnnectedWithProductsException;
+import com.example.simplestoragesystem.exception.ProducerIsConnnectedWithProductsException;
 import com.example.simplestoragesystem.model.Category;
 import com.example.simplestoragesystem.model.Product;
 import com.example.simplestoragesystem.service.CategoryService;
@@ -64,7 +66,7 @@ public class CategoryController {
 
     @DeleteMapping("/categories/{id}")
     public Category deleteCategory(@PathVariable final Long id) {
-        //repository.deleteById(id);
+        if(service.checkProductsList(id)) throw new CategoryIsConnnectedWithProductsException(id);
         return service.deleteCategory(id);
     }
 

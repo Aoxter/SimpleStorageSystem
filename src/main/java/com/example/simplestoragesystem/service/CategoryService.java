@@ -86,4 +86,9 @@ public class CategoryService {
         newCategory.addProductsBulk(productsToMove);
         return newCategory;
     }
+
+    public boolean checkProductsList(Long categoryId){
+        Category category = readCategory(categoryId);
+        return category.checkProductsListEmpty();
+    }
 }

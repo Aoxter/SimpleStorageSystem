@@ -88,4 +88,9 @@ public class ProducerService {
         newProducer.addProductsBulk(productsToMove);
         return newProducer;
     }
+
+    public boolean checkProductsList(Long producerId){
+        Producer producer = readProducer(producerId);
+        return producer.checkProductsListEmpty();
+    }
 }
